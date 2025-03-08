@@ -13,7 +13,7 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
 
-  // Fetch questions from Open Trivia Database
+  
   const fetchQuestions = async () => {
     setIsLoading(true);
     setError(null);
@@ -25,15 +25,15 @@ function App() {
       const data = await response.json();
       
       if (data.response_code === 0) {
-        // Process questions to include all answers in a single array
+      
         const processedQuestions = data.results.map((question, index) => {
-          // Combine correct and incorrect answers
+          
           const allAnswers = [
             ...question.incorrect_answers, 
             question.correct_answer
           ];
           
-          // Shuffle answers
+          
           const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
           
           return {
@@ -55,12 +55,12 @@ function App() {
     }
   };
 
-  // Load questions when component mounts
+  
   useEffect(() => {
     fetchQuestions();
   }, []);
 
-  // Handle answer selection
+  
   const handleAnswerSelect = (questionId, answer) => {
     setUserAnswers({
       ...userAnswers,
@@ -68,9 +68,9 @@ function App() {
     });
   };
 
-  // Handle quiz submission
+  
   const handleSubmit = () => {
-    // Calculate score
+    
     let newScore = 0;
     questions.forEach(question => {
       if (userAnswers[question.id] === question.correctAnswer) {
@@ -82,12 +82,12 @@ function App() {
     setShowResults(true);
   };
 
-  // Start a new quiz
+  
   const handleNewQuiz = () => {
     fetchQuestions();
   };
 
-  // Check if all questions have been answered
+  
   const allQuestionsAnswered = questions.length > 0 && 
     questions.every(question => userAnswers[question.id]);
 
